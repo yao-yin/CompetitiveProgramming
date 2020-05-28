@@ -1,3 +1,4 @@
+//https://vjudge.net/problem/POJ-3669
 #ifdef _MSC_VER
 #include <hash_map>
 #include <hash_set>
@@ -46,12 +47,12 @@ int bfs() {
     q.push(make_pair(0, 0));
     dist[0][0] = 0;
     while(!q.empty()) {
-        auto curr = q.front();
+        pii curr = q.front();
         q.pop();
         int x = curr.first;
         int y = curr.second;
         if(!st[x][y]) {
-            cout << x << " " << y << endl;
+            //cout << x << " " << y << endl;
             return dist[x][y];
         }
         for(int i = 0; i < 4; i ++) {
@@ -72,14 +73,14 @@ int main()
     cin >> m;
     for(int i = 0; i < m; i ++) {
         cin >> x >> y >> t;
-        cout <<x << " " << y << " " << t << endl;
+        //cout <<x << " " << y << " " << t << endl;
         board[x][y] = min(board[x][y], t);
         st[x][y] = true;
         for(int j = 0; j < 4; j ++) {
-            int newx = x + dirx[i];
-            int newy = y + diry[i];
+            int newx = x + dirx[j];
+            int newy = y + diry[j];
             if(newx >= 0 && newy >= 0) {
-                cout << newx << " " << newy 
+                //cout << newx << " " << newy << " " << t << endl;
                 board[newx][newy] = min(board[newx][newy], t);
                 st[newx][newy] = true;
             }
