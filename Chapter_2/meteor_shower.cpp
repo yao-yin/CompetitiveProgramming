@@ -41,7 +41,16 @@ inline void quickread() {
 
 int bfs() {
     queue<pii> q;
-    if(!st[0][0]) return 0;
+    q.push(make_pair(0, 0));
+    while(!q.empty()) {
+        auto curr = q.front();
+        q.pop();
+        int x = curr.first;
+        int y = curr.second;
+        for(int i = 0; i < 4; i ++) {
+            
+        }
+    }
 }
 int main()
 {
