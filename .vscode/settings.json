@@ -5,6 +5,7 @@
         "utility": "cpp",
         "iostream": "cpp",
         "unordered_map": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "istream": "cpp"
     }
 }
