@@ -29,10 +29,38 @@ inline void quickread() {
     cin.tie(nullptr);
 }
 
+void show(string & s) {
+    for(int i = 1; i <= s.size(); i ++) {
+        cout << s[i-1];
+        if()
+    }
+}
+
+void solve() {
+    int n;
+    string s;
+    deque<char> dq;
+    cin >> n;
+    char c;
+    for(int i = 0; i < n; i ++) {
+        cin >> c;
+        dq.push_back(c);
+    }
+    while(!dq.empty()) {
+        if(dq.front() < dq.back()) {
+            s.push_back(dq.front());
+            dq.pop_front();
+        } else {
+            s.push_back(dq.back());
+            dq.pop_back();
+        }
+    }
+    show(s);
+}
+
 int main()
 {
     quickread();
-    int 
-    cin >> waitingForGeneratingSeeds >> seedLength;
+    solve();
     return 0;
 }
