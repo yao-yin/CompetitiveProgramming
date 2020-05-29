@@ -22,7 +22,8 @@ using namespace std;
 typedef long long ll;
 typedef pair<int, int> pii;
 //const int mod = 1e9+7;
-
+string waitingForGeneratingSeeds;
+int seedLength;
 inline void quickread() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -31,5 +32,7 @@ inline void quickread() {
 int main()
 {
     quickread();
+    int 
+    cin >> waitingForGeneratingSeeds >> seedLength;
     return 0;
 }
