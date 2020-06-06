@@ -31,7 +31,7 @@ typedef pair<int, int> pii;
 const int N = 40010;
 const int M = 2*N;
 int h[N], e[M], ne[M], w[M], idx, n, m, k;
-int parent[N][16], dparent[N][16];
+int parent[N][16];
 int depth[N], rdepth[N];
 
 inline void quickread() {
@@ -63,10 +63,8 @@ void bfs() {
                 depth[j] = depth[curr] + 1;
                 rdepth[j] = rdepth[curr] + w[i];
                 parent[j][0] = curr;
-                dparent[j][0] = w[i];
                 for(int ii = 1; ii <= 15; ii ++) {
                     parent[j][ii] = parent[parent[j][ii-1]][ii-1];
-                    dparent[j][ii] = dparent[j][ii-1] + dparent[parent[j][ii-1]][ii-1];
                 }
                 q.push(j);
             }
