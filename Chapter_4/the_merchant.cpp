@@ -35,7 +35,16 @@ int maxp[N], minp[N], up[N], down[N], parent[N];
 int res[N];
 bool st[N];
 
-void find
+int find(int x) {
+    if(parent[x] == x) return x;
+    int y = parent[x];
+    parent[x] = find(y);
+    up[x] = max(up[y], maxp[y] - price[x]);
+    down[x] = max(down[y], price[x] - minp[y]);
+    maxp[x] = max(maxp[x], maxp[y]);
+    minp[x] = min(minp[x], minp[y]);
+    return parent[x];
+}
 
 struct Query{
     int from, to, id;
@@ -44,31 +53,37 @@ struct Query{
         to = t;
         id = iid;
     }
+    Query(){}
 }queries[N];
 
 vector<int> tasks[N];
 vector<pii> contain[N]; 
 
 void tarjan(int u) {
+    //cout << u << endl;
     st[u] = true;
-    for(pii cont: contain[u]) {
+    for(int i = 0; i < contain[u].size(); i ++) {
+        pii cont = contain[u][i];
         if(st[cont.first]) {
-            tasks[u].push_back(cont.second);
+            tasks[find(cont.first)].push_back(cont.second);
         }
     }
-    for(int i = h[u]; i != -1; i = ne[u]) {
+    for(int i = h[u]; i != -1; i = ne[i]) {
         int j = e[i];
         if(st[j]) continue;
         tarjan(j);
         parent[j] = u;
     }
-    for(int task: tasks[u]) {
+    
+    for(int i = 0; i < tasks[u].size(); i ++) {
+        int task = tasks[u][i];
         int x = queries[task].from;
         int y = queries[task].to;
         int iid = queries[task].id;
         find(x);
         find(y);
-        res[iid] = max(max(up[x], down[y]), maxp[y] - maxp[x]);
+        //cout << up[x] << " " << down[y] <<" "<< maxp[y] <<" " << minp[x] << endl;
+        res[iid] = max(max(up[x], down[y]), maxp[y] - minp[x]);
     }
 }
 
@@ -93,7 +108,11 @@ int main()
     quickread();
     init();
     cin >> n;
-    for(int i = 1; i <= n; i ++) cin >> price[i];
+    for(int i = 1; i <= n; i ++) {
+        cin >> price[i];
+        maxp[i] = price[i];
+        minp[i] = price[i];
+    }
     int a, b;
     for(int i = 1; i < n; i ++) {
         cin >> a >> b;
