@@ -35,12 +35,13 @@ int maxp[N], minp[N], up[N], down[N], parent[N];
 int res[N];
 bool st[N];
 
+
 int find(int x) {
-    if(parent[x] == x) return x;
+    if(x == parent[x]) return x;
     int y = parent[x];
     parent[x] = find(y);
-    up[x] = max(up[y], maxp[y] - price[x]);
-    down[x] = max(down[y], price[x] - minp[y]);
+    up[x] = max(up[x], max(maxp[y] - minp[x], up[y]));
+    down[x] = max(down[x], max(maxp[x] - minp[y], down[y]));
     maxp[x] = max(maxp[x], maxp[y]);
     minp[x] = min(minp[x], minp[y]);
     return parent[x];

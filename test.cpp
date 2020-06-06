@@ -1,72 +1,91 @@
-#ifdef _MSC_VER
-#include <hash_map>
-#include <hash_set>
-using namespace stdext;
-#define unordered_map hash_map
-#define unordered_set hash_set
-#else
-#include <unordered_map>
-#include <unordered_set>
-#endif
+
 #include <iostream>
-#include <iomanip>
-#include <cmath>
-#include <cstdlib>
+#include <cstdio>
 #include <cstring>
-#include <climits>
-#include <algorithm>
-#include <numeric>
-#include <utility>
-#include <string>
 #include <vector>
-#include <stack>
 #include <queue>
-#include <set>
+#include <cmath>
+#include <algorithm>
 #include <map>
-
+#include <ctime>
+#define MAXN 52222
+#define MAXM 222222
+#define INF 1000000001
 using namespace std;
-typedef long long ll;
-typedef pair<int, int> pii;
-//const int mod = 1e9+7;
+vector<int>g[MAXN], st[MAXN], ed[MAXN], id[MAXN], ask[MAXN], pos[MAXN];
+int mx[MAXN], mi[MAXN], up[MAXN], down[MAXN], vis[MAXN], fa[MAXN], ans[MAXN], price[MAXN];
+int n, Q;
 
-
-inline void quickread() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
+int find(int x) {
+    if(fa[x] == x) return x;
+    int y = fa[x];
+    fa[x] = find(y);
+    up[x] = max(up[y], mx[y] - price[x]);
+    down[x] = max(down[y], price[x] - mi[y]);
+    mx[x] = max(mx[x], mx[y]);
+    mi[x] = min(mi[x], mi[y]);
+    return fa[x];
 }
-
-void show(string & s) {
-    for(int i = 1; i <= s.size(); i ++) {
-        cout << s[i-1];
-        if(i % 60 == 0) cout << endl;
-    }
-}
-
-void solve() {
-    int n;
-    string s;
-    deque<char> dq;
-    cin >> n;
-    char c;
-    for(int i = 0; i < n; i ++) {
-        cin >> c;
-        dq.push_back(c);
-    }
-    while(!dq.empty()) {
-        if(dq.front() < dq.back()) {
-            s.push_back(dq.front());
-            dq.pop_front();
-        } else {
-            s.push_back(dq.back());
-            dq.pop_back();
+void tarjan(int u) {
+    vis[u] = 1;
+    for(int i = 0; i < ask[u].size(); i++) {
+        int v = ask[u][i];
+        if(vis[v]) {
+            int t = find(v);
+            int z = pos[u][i];
+            if(z > 0) {
+                st[t].push_back(u);
+                ed[t].push_back(v);
+                id[t].push_back(z);
+            } else {
+                st[t].push_back(v);
+                ed[t].push_back(u);
+                id[t].push_back(-z);
+            }
         }
     }
-    show(s);
+    for(int i = 0; i < g[u].size(); i++) {
+        int v = g[u][i];
+        if(!vis[v]) {
+            tarjan(v);
+            fa[v] = u;
+        }
+    }
+    for(int i = 0; i < st[u].size(); i++) {
+        int a = st[u][i];
+        int b = ed[u][i];
+        int t = id[u][i];
+        find(a);
+        find(b);
+        ans[t] = max(up[a], max(down[b], mx[b] - mi[a]));
+    }
 }
-
-int main()
-{
-    quickread();
-    solve();
+ 
+int main() {
+        scanf("%d", &n);
+        int u, v, w;
+ 
+        for(int i = 1; i <= n; i++) {
+            scanf("%d", &w);
+            mx[i] = mi[i] = w; fa[i] = i;
+            price[i] = w;
+        }
+        for(int i = 1; i < n; i++) {
+            scanf("%d%d", &u, &v);
+            g[u].push_back(v);
+            g[v].push_back(u);
+ 
+        }
+        scanf("%d", &Q);
+        for(int i = 1; i <= Q; i++) {
+            scanf("%d%d", &u, &v);
+            ask[u].push_back(v);
+            pos[u].push_back(i);
+            ask[v].push_back(u);
+            pos[v].push_back(-i);
+        }
+        tarjan(1);
+        for(int i = 1; i <= Q; i++) printf("%d\n", ans[i]);
+ 
     return 0;
 }
