@@ -34,7 +34,8 @@ int h[N], e[M], ne[M], price[N], idx, n, q;
 int maxp[N], minp[N], up[N], down[N], parent[N];
 int res[N];
 bool st[N];
-
+vector<int> tasks[N];
+vector<pii> contain[N]; 
 
 int find(int x) {
     if(x == parent[x]) return x;
@@ -57,8 +58,6 @@ struct Query{
     Query(){}
 }queries[N];
 
-vector<int> tasks[N];
-vector<pii> contain[N]; 
 
 void tarjan(int u) {
     //cout << u << endl;
