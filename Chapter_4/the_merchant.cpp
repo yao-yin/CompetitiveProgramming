@@ -1,3 +1,4 @@
+// https://vjudge.net/problem/POJ-3728
 #ifdef _MSC_VER
 #include <hash_map>
 #include <hash_set>
@@ -28,7 +29,7 @@ using namespace std;
 typedef long long ll;
 typedef pair<int, int> pii;
 //const int MOD = 1e9+7;
-const int N = 40010;
+const int N = 50010;
 const int M = 2*N;
 int h[N], e[M], ne[M], idx, n, q;
 int prices[N], parent[N], maxp[N], minp[N], up[N], down[N], res[N];
@@ -44,12 +45,16 @@ struct Query {
 }queries[N];
 
 vector<pii> contain[N];
-vector<int> tasks;
+vector<int> tasks[N];
 
 int find(int x) {
-    if(x = parent[x]) return x;
+    if(x == parent[x]) return x;
     int y = parent[x];
     parent[x] = find(y);
+    up[x] = max(up[x], max(up[y], maxp[y] - minp[x]));
+    down[x] = max(down[x], max(down[y], maxp[x] - minp[y]));
+    maxp[x] = max(maxp[x], maxp[y]);
+    minp[x] = min(minp[x], minp[y]);
     return parent[x];
 }
 
@@ -65,6 +70,15 @@ void tarjan(int u) {
         if(st[j]) continue;
         tarjan(j);
         parent[j] = u;
+    }
+    for(int i = 0; i < tasks[u].size(); i ++) {
+        int task = tasks[u][i];
+        int x = queries[task].src;
+        int y = queries[task].des;
+        int iid = queries[task].id;
+        find(x);
+        find(y);
+        res[iid] = max(max(up[x], down[y]), maxp[y] - minp[x]);
     }
 }
 
