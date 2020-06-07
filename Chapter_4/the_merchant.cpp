@@ -27,46 +27,38 @@ using namespace stdext;
 using namespace std;
 typedef long long ll;
 typedef pair<int, int> pii;
-//const int mod = 1e9+7;
-const int N = 50010;
+//const int MOD = 1e9+7;
+const int N = 40010;
 const int M = 2*N;
-int h[N], e[M], ne[M], price[N], idx, n, q;
-int maxp[N], minp[N], up[N], down[N], parent[N];
-int res[N];
+int h[N], e[M], ne[M], idx, n, q;
+int prices[N], parent[N], maxp[N], minp[N], up[N], down[N], res[N];
 bool st[N];
-vector<int> tasks[N];
-vector<pii> contain[N]; 
-
-int find(int x) {
-    if(x == parent[x]) return x;
-    int y = parent[x];
-    parent[x] = find(y);
-    up[x] = max(up[x], max(maxp[y] - minp[x], up[y]));
-    down[x] = max(down[x], max(maxp[x] - minp[y], down[y]));
-    maxp[x] = max(maxp[x], maxp[y]);
-    minp[x] = min(minp[x], minp[y]);
-    return parent[x];
-}
-
-struct Query{
-    int from, to, id;
-    Query(int fr, int t, int iid) {
-        from = fr;
-        to = t;
-        id = iid;
+struct Query {
+    int src, des, id;
+    Query(int a, int b, int c) {
+        src = a;
+        des = b;
+        id = c;
     }
     Query(){}
 }queries[N];
 
+vector<pii> contain[N];
+vector<int> tasks;
+
+int find(int x) {
+    if(x = parent[x]) return x;
+    int y = parent[x];
+    parent[x] = find(y);
+    return parent[x];
+}
 
 void tarjan(int u) {
-    //cout << u << endl;
     st[u] = true;
     for(int i = 0; i < contain[u].size(); i ++) {
-        pii cont = contain[u][i];
-        if(st[cont.first]) {
-            tasks[find(cont.first)].push_back(cont.second);
-        }
+        int another = contain[u][i].first;
+        int id = contain[u][i].second;
+        if(st[another]) tasks[find(another)].push_back(id);
     }
     for(int i = h[u]; i != -1; i = ne[i]) {
         int j = e[i];
@@ -74,44 +66,31 @@ void tarjan(int u) {
         tarjan(j);
         parent[j] = u;
     }
-    
-    for(int i = 0; i < tasks[u].size(); i ++) {
-        int task = tasks[u][i];
-        int x = queries[task].from;
-        int y = queries[task].to;
-        int iid = queries[task].id;
-        find(x);
-        find(y);
-        //cout << up[x] << " " << down[y] <<" "<< maxp[y] <<" " << minp[x] << endl;
-        res[iid] = max(max(up[x], down[y]), maxp[y] - minp[x]);
-    }
 }
 
 inline void quickread() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 }
-
-void add(int u, int v) {
-    e[idx] = v;
-    ne[idx] = h[u];
-    h[u] = idx ++;
+void add(int a, int b) {
+    e[idx] = b;
+    ne[idx] = h[a];
+    h[a] = idx ++;
 }
-
 void init() {
-    for(int i = 1; i < N; i ++) parent[i] = i;
     memset(h, -1, sizeof h);
+    for(int i = 1; i <= n; i ++) {
+        parent[i] = i;
+    }
 }
-
 int main()
 {
     quickread();
-    init();
     cin >> n;
+    init();
     for(int i = 1; i <= n; i ++) {
-        cin >> price[i];
-        maxp[i] = price[i];
-        minp[i] = price[i];
+        cin >> prices[i];
+        maxp[i] = minp[i] = prices[i];
     }
     int a, b;
     for(int i = 1; i < n; i ++) {
@@ -120,9 +99,9 @@ int main()
         add(b, a);
     }
     cin >> q;
-    for(int i = 1; i <= q; i ++) {
+    for(int i = 1;i <= q; i ++) {
         cin >> a >> b;
-        queries[i] = Query (a, b, i);
+        queries[i] = Query(a, b, i);
         contain[a].push_back(make_pair(b, i));
         contain[b].push_back(make_pair(a, i));
     }
