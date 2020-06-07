@@ -24,52 +24,7 @@ using namespace stdext;
 #include <queue>
 #include <set>
 #include <map>
-/*
-class Solution {
-public:
-    int minCost(vector<int>& houses, vector<vector<int>>& cost, int m, int n, int target) {
-        memset(dp, 0x3f3f3f3f, sizeof dp);
-        int res = 0x3f3f3f3f;
-        rhouses = houses;
-        rcost = cost;
-        rm = m;
-        rn = n;
-        for(int i = 1; i <= n; i ++) {
-            res = min(res, get(m-1, i, target));
-        }
-        if(res >= 0x3f3f3f3f) return -1;
-        return res;
-    }
-    int get(int curr, int color, int ne) {
-        if(rhouses[curr] != 0 && color != rhouses[curr]) return 0x3f3f3f3f;
-        if(dp[curr][color][ne] < 0x3f3f3f3f) return dp[curr][color][ne];
-        int res = 0x3f3f3f3f;
-        if(curr == 0) {
-            if(ne > 1) return res;
-            else {
-                res = 0;
-                if(rhouses[curr] != color)res += rcost[curr][color-1];
-                dp[curr][color][ne] = res;
-                return res;
-            }
-        }
-        for(int i = 1; i <= rn; i ++) {
-            if (i == color) {
-                res = min(res, get(curr-1, i, ne));
-                continue;
-            }
-            if(ne > 1)res = min(res, get(curr-1, i, ne - 1));
-        }
-        if(color != rhouses[curr]) res += rcost[curr][color-1];
-        dp[curr][color][ne] = res;
-        return res;
-    }
-private:
-    int dp[110][25][110];
-    vector<vector<int>> rcost;
-    vector<int> rhouses;
-    int rm, rn;
-};*/
+
 using namespace std;
 typedef long long ll;
 typedef pair<int, int> pii;
