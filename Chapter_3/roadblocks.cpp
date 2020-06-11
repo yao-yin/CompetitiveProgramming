@@ -5,7 +5,7 @@
 using namespace std;
 typedef pair<int, int> pii;
 const int N = 5010;
-const int M = 200010;
+const int M = 400010;
 int h[N], rh[N], e[M], w[M], ne[M], idx;
 int vis[N], dist[N], m, n, s, t, k;
 bool st[N];
@@ -14,7 +14,7 @@ void dij(int des) {
     memset(dist, 0x3f3f3f, sizeof dist);
     dist[des] = 0;
     priority_queue<pii, vector<pii>, greater<pii>> pq;
-    pq.push({0, des});
+    pq.push(make_pair(0, des));
     while(!pq.empty()) {
         pii nan = pq.top();
         int dis = nan.first;
@@ -26,7 +26,7 @@ void dij(int des) {
             int j = e[i];
             if(dist[j] > dist[pos] + w[i]) {
                 dist[j] = dist[pos] + w[i];
-                pq.push({dist[j], j});
+                pq.push(make_pair(dist[j], j));
             }
         }
     }
@@ -38,14 +38,16 @@ int astar(int src, int des, int k)  {
     if(src == des) vis[des] --;
     if(dist[src] == 0x3f3f3f) return -1;
     while(!pq.empty()) {
-        auto [temp_dist, pos] = pq.top();
+        pii nan = pq.top();
+        int temp_dist = nan.first;
+        int pos = nan.second;
         pq.pop();
         vis[pos] ++;
         int r_dist = temp_dist - dist[pos];
         if(vis[pos] == k && pos == des) return temp_dist;
         for(int i = h[pos]; i!= -1; i = ne[i]) {
             int j = e[i];
-            pq.push({r_dist + w[i] + dist[j], j});
+            pq.push(make_pair(r_dist + w[i] + dist[j], j));
         }
     }
     return -1;
