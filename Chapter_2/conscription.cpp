@@ -68,7 +68,12 @@ int main()
     while(t --) {
         cin >> n >> m >> r;
         init();
-        for(int i = 1; i < 20010; i ++) parent[i] = i;
+        int a, b, d;
+        for(int i = 0; i < r; i ++) {
+            cin >> a >> b >> d;
+            edges[i] = Edge(a, b, d);
+        }
+        
     }
     return 0;
 }
