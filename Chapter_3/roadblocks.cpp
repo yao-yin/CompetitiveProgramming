@@ -33,6 +33,7 @@ int n, r;
 int h[N], e[R], ne[R], w[R], idx;
 int dist[N];
 int visCnt[N];
+bool st[N];
 
 void init() {
     memset(dist, 0x3f3f3f3f, sizeof dist);
@@ -49,7 +50,23 @@ void add(int a, int b, int c) {
 void dij(int des) {
     // calculate x-n distance
     dist[des] = 0;
-    
+    priority_queue<pii, vector<pii>, greater<pii>> pq;
+    pq.push(make_pair(0, des));
+    while(!pq.empty()) {
+        pii curr = pq.top();
+        pq.pop();
+        int pos = curr.second;
+        int d = curr.first;
+        if(st[pos]) continue;
+        st[pos] = true;
+        for(int i = h[pos]; i != -1; i = ne[i]) {
+            int j = e[i];
+            if(dist[j] > d + w[i]) {
+                dist[j] = d + w[i];
+                pq.push(make_pair(dist[j], j));
+            }
+        }
+    }
 }
 
 int heuristic(int pos) {
@@ -65,10 +82,11 @@ int astar(int src, int des, int k) {
         pq.pop();
         int pos = curr.second;
         int curr_dist = curr.first - heuristic(pos);
+        // cout << pos << " " << curr_dist << endl;
         visCnt[pos] ++;
         if(pos == des && visCnt[pos] == k) return curr_dist;
         for(int i = h[pos]; i != -1; i = ne[i]) {
-            int next_pos = e[pos];
+            int next_pos = e[i];
             pq.push(make_pair(curr_dist + w[i] + heuristic(next_pos), next_pos));
         }
     }
