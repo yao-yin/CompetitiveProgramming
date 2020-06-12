@@ -37,7 +37,6 @@ int visCnt[N];
 void init() {
     memset(dist, 0x3f3f3f3f, sizeof dist);
     memset(h, -1, sizeof h);
-    dist[n] = 0;
 }
 
 void add(int a, int b, int c) {
@@ -47,8 +46,10 @@ void add(int a, int b, int c) {
     h[a] = idx ++;
 }
 
-void dij() {
+void dij(int des) {
     // calculate x-n distance
+    dist[des] = 0;
+    
 }
 
 int heuristic(int pos) {
@@ -58,12 +59,20 @@ int heuristic(int pos) {
 
 int astar(int src, int des, int k) {
     priority_queue<pii, vector<pii>, greater<pii>> pq;
+    pq.push(make_pair(heuristic(src), src));
     while(!pq.empty()) {
         pii curr = pq.top();
         pq.pop();
         int pos = curr.second;
-        int curr_dist = curr.first - 
+        int curr_dist = curr.first - heuristic(pos);
+        visCnt[pos] ++;
+        if(pos == des && visCnt[pos] == k) return curr_dist;
+        for(int i = h[pos]; i != -1; i = ne[i]) {
+            int next_pos = e[pos];
+            pq.push(make_pair(curr_dist + w[i] + heuristic(next_pos), next_pos));
+        }
     }
+    return -1;
 }
 
 inline void quickread() {
@@ -74,15 +83,15 @@ inline void quickread() {
 int main()
 {
     quickread();
-    cin >> n >> r;
     init();
+    cin >> n >> r;
     int a, b, c;
     for(int i = 1; i <= r; i ++) {
         cin >> a >> b >> c;
         add(a, b, c);
         add(b, a, c);
     }
-    dij();
+    dij(n);
     cout << astar(1, n, 2) << endl;
     return 0;
 }
