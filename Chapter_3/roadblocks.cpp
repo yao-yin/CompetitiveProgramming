@@ -1,82 +1,77 @@
+#ifdef _MSC_VER
+#include <hash_map>
+#include <hash_set>
+using namespace stdext;
+#define unordered_map hash_map
+#define unordered_set hash_set
+#else
+#include <unordered_map>
+#include <unordered_set>
+#endif
 #include <iostream>
-#include <algorithm>
-#include <queue>
+#include <iomanip>
+#include <cmath>
+#include <cstdlib>
 #include <cstring>
+#include <climits>
+#include <algorithm>
+#include <numeric>
+#include <utility>
+#include <string>
+#include <vector>
+#include <stack>
+#include <queue>
+#include <set>
+#include <map>
+
 using namespace std;
+typedef long long ll;
 typedef pair<int, int> pii;
-const int N = 5010;
-const int M = 400010;
-int h[N], rh[N], e[M], w[M], ne[M], idx;
-int vis[N], dist[N], m, n, s, t, k;
-bool st[N];
-int distk[N];
-void dij(int des) {
-    memset(dist, 0x3f3f3f, sizeof dist);
-    dist[des] = 0;
-    priority_queue<pii, vector<pii>, greater<pii>> pq;
-    pq.push(make_pair(0, des));
-    while(!pq.empty()) {
-        pii nan = pq.top();
-        int dis = nan.first;
-        int pos = nan.second;
-        pq.pop();
-        if(st[pos]) continue;
-        st[pos] = true;
-        for(int i = rh[pos]; i != -1; i = ne[i]) {
-            int j = e[i];
-            if(dist[j] > dist[pos] + w[i]) {
-                dist[j] = dist[pos] + w[i];
-                pq.push(make_pair(dist[j], j));
-            }
-        }
-    }
-}
+//const int mod = 1e9+7;
+const int N = 5010, R = 200010;
+int n, r;
+int h[N], e[R], ne[R], w[R], idx;
+int dist[N];
+int visCnt[N];
 
-int astar(int src, int des, int k)  {
-    priority_queue<pii, vector<pii>, greater<pii>> pq;
-    pq.push({dist[src], src});
-    if(src == des) vis[des] --;
-    if(dist[src] == 0x3f3f3f) return -1;
-    while(!pq.empty()) {
-        pii nan = pq.top();
-        int temp_dist = nan.first;
-        int pos = nan.second;
-        pq.pop();
-        vis[pos] ++;
-        int r_dist = temp_dist - dist[pos];
-        if(vis[pos] == k && pos == des) return temp_dist;
-        for(int i = h[pos]; i!= -1; i = ne[i]) {
-            int j = e[i];
-            pq.push(make_pair(r_dist + w[i] + dist[j], j));
-        }
-    }
-    return -1;
-}
-void add(int* head, int a, int b, int c) {
-    e[idx] = b;
-    ne[idx] = head[a];
-    w[idx] = c;
-    head[a] = idx ++;
-}
-
-int main() {
-    cin >> n >> m;
-    if(m == 0) {
-        cout << -1 << endl;
-        return 0;
-    }
-    memset(dist, 0x3f3f3f, sizeof dist);
+void init() {
+    memset(dist, 0x3f3f3f3f, sizeof dist);
     memset(h, -1, sizeof h);
-    memset(rh, -1, sizeof rh);
+    dist[n] = 0;
+}
+
+void add(int a, int b, int c) {
+    e[idx] = b;
+    ne[idx] = h[a];
+    w[idx] = c;
+    h[a] = idx ++;
+}
+
+void dij() {
+    
+}
+
+int heuristic(int pos) {
+    return dist[pos];
+}
+
+inline void quickread() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+}
+
+int main()
+{
+    quickread();
+    cin >> n >> r;
+    init();
     int a, b, c;
-    for(int i = 1; i <= m; i ++) {
+    for(int i = 1; i <= r; i ++) {
         cin >> a >> b >> c;
-        add(h, a, b, c);
-        add(h, b, a, c);
-        add(rh, b, a, c);
-        add(rh, a, b, c);
+        add(a, b, c);
+        add(b, a, c);
     }
-    dij(n);
+    dij();
     cout << astar(1, n, 2) << endl;
     return 0;
 }
