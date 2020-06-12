@@ -30,16 +30,35 @@ typedef pair<int, int> pii;
 //const int mod = 1e9+7;
 const int N = 5010;
 const int R = 100010;
-int h[N], e[2*R], ne[2*R], w[2*R];
-int dist[N], dist2[N];
+int h[N], e[2*R], ne[2*R], w[2*R], idx;
+int dist[N], dist2[N], n, r;
 
 void dij() {
-
+    dist[1] = 0;
+    priority_queue<pii, vector<pii>, greater<pii>> pq;
+    pq.push(make_pair(0, 1));
+    while(!pq.empty()) {
+        pii curr = pq.top();
+        pq.pop();
+        int pos = curr.second;
+        int d = curr.first;
+        for(int i = h[pos]; i != -1; i = ne[i]) {
+            int next_pos = e[i];
+            int next_dist = d + w[i];
+            if(dist[next_pos] >= next_dist) {
+                dist2[next_pos] = dist[next_pos];
+                dist[next_pos] = next_dist;
+            } else if(next_dist ){
+                
+            }
+        }
+    }
 }
 
 inline void init() {
     memset(dist, 0x3f3f3f3f, sizeof dist);
-    memset(dist2, 0x3f3f3f3f,sizeof dist2);m
+    memset(h, -1, sizeof h);
+    memset(dist2, 0x3f3f3f3f,sizeof dist2);
 }
 
 inline void quickread() {
@@ -50,6 +69,14 @@ inline void quickread() {
 int main()
 {
     quickread();
-    
+    cin >> n >> r;
+    int a, b, c;
+    for(int i = 0; i < r; i ++) {
+        cin >> a >> b >> c;
+        add(a, b, c);
+        add(b, a, c);
+    }
+    dij;
+    cout << dist2[n] << endl;
     return 0;
 }
