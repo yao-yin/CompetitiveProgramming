@@ -42,17 +42,27 @@ void dij() {
         pq.pop();
         int pos = curr.second;
         int d = curr.first;
+        //cout << pos << " " << d << endl;
         for(int i = h[pos]; i != -1; i = ne[i]) {
             int next_pos = e[i];
             int next_dist = d + w[i];
             if(dist[next_pos] >= next_dist) {
                 dist2[next_pos] = dist[next_pos];
                 dist[next_pos] = next_dist;
-            } else if(next_dist ){
-                
+                pq.push(make_pair(next_dist, next_pos));
+            } else if(next_dist < dist2[next_pos]) {
+                dist2[next_pos] = next_dist;
+                pq.push(make_pair(next_dist, next_pos));
             }
         }
     }
+}
+
+inline void add(int a, int b, int c) {
+    e[idx] = b;
+    ne[idx] = h[a];
+    w[idx] = c;
+    h[a] = idx ++;
 }
 
 inline void init() {
@@ -69,6 +79,7 @@ inline void quickread() {
 int main()
 {
     quickread();
+    init();
     cin >> n >> r;
     int a, b, c;
     for(int i = 0; i < r; i ++) {
@@ -76,7 +87,7 @@ int main()
         add(a, b, c);
         add(b, a, c);
     }
-    dij;
+    dij();
     cout << dist2[n] << endl;
     return 0;
 }
