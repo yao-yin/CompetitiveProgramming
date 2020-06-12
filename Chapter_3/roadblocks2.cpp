@@ -28,11 +28,19 @@ using namespace std;
 typedef long long ll;
 typedef pair<int, int> pii;
 //const int mod = 1e9+7;
-int 
+const int N = 5010;
+const int R = 100010;
+int h[N], e[2*R], ne[2*R], w[2*R];
+int dist[N], dist2[N];
 
+void dij() {
 
+}
 
-
+inline void init() {
+    memset(dist, 0x3f3f3f3f, sizeof dist);
+    memset(dist2, 0x3f3f3f3f,sizeof dist2);m
+}
 
 inline void quickread() {
     ios::sync_with_stdio(false);
