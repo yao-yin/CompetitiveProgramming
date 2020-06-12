@@ -48,11 +48,22 @@ void add(int a, int b, int c) {
 }
 
 void dij() {
-    
+    // calculate x-n distance
 }
 
 int heuristic(int pos) {
+    // heuristic function in A* algorithm
     return dist[pos];
+}
+
+int astar(int src, int des, int k) {
+    priority_queue<pii, vector<pii>, greater<pii>> pq;
+    while(!pq.empty()) {
+        pii curr = pq.top();
+        pq.pop();
+        int pos = curr.second;
+        int curr_dist = curr.first - 
+    }
 }
 
 inline void quickread() {
