@@ -46,9 +46,9 @@ void getdiff() {
     memset(latter,0, sizeof latter);
     int f = 0;
     for(int i = 0; i < n; i ++) {
-        form[i] = f;
-        f*= 10;
-        f += nums[i];
+        form[i] = f*10 + nums[i];
+        f = form[i];
+        cout << form[i] <<" ";
     }
     int base = 1;
     for(int i = n-1 ; i > 0; i --) {
@@ -57,7 +57,7 @@ void getdiff() {
     }
     for(int i = 0; i < n-1; i ++) {
         if(i > 0 && nums[0] == 0) continue;
-        if(i < n - 1 && nums[i+1] == 0) continue;
+        if(nums[i+1] == 0) continue;
         diff = min(diff, abs(form[i] - latter[i+1]));
     }
 }
@@ -65,25 +65,28 @@ void getdiff() {
 void solve() {
     memset(nums, 0, sizeof nums);
     stringstream inp(line);
-    int idx = 0;
-    while(inp >> nums[idx ++]){}
+    n = 0;
+    string a;
+    while(getline(inp, a, ' ')){
+        nums[n ++] = stoi(a);
+    }
     diff = INF;
-    for(int i = 0; i < n; i ++) cin >> nums[i];
-    do {
+    getdiff();
+    /*do {
         getdiff();
-    } while(next_permutation(nums, nums + n));
+    } while(next_permutation(nums, nums + n));*/
     cout << diff << endl;
 }
+
 
 int main()
 {
     quickread();
     cin >> test_case;
-    string lines;
     while(test_case --) {
-        getline(std::cin, lines);
-        cout << lines << endl;
-        //solve();
+        cin.ignore();
+        getline(cin, line);
+        solve();
     }
     return 0;
 }
