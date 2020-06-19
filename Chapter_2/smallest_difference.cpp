@@ -41,24 +41,24 @@ inline void quickread() {
     cin.tie(0);
 }
 
+int stoi(string & s) {
+    int ret = 0;
+    int base = 10;
+    for(int i = s.size() - 1; i >= 0; i --) {
+        ret*=10;
+        ret += (s[i] - '0');
+    }
+    return ret;
+}
+
 void getdiff() {
     memset(form,0, sizeof form);
     memset(latter,0, sizeof latter);
     int f = 0;
-    for(int i = 0; i < n; i ++) {
-        form[i] = f*10 + nums[i];
-        f = form[i];
-        cout << form[i] <<" ";
-    }
-    int base = 1;
-    for(int i = n-1 ; i > 0; i --) {
-        latter[i] = latter[i+1] + base*nums[i];
-        base *= 10;
-    }
-    for(int i = 0; i < n-1; i ++) {
-        if(i > 0 && nums[0] == 0) continue;
-        if(nums[i+1] == 0) continue;
-        diff = min(diff, abs(form[i] - latter[i+1]));
+    int mid = n / 2;
+    int l = 0;
+    for(int i = 0; i < mid; i ++) {
+        f
     }
 }
 
@@ -72,9 +72,9 @@ void solve() {
     }
     diff = INF;
     getdiff();
-    /*do {
+    do {
         getdiff();
-    } while(next_permutation(nums, nums + n));*/
+    } while(next_permutation(nums, nums + n));
     cout << diff << endl;
 }
 
