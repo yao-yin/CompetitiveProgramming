@@ -23,6 +23,7 @@ using namespace stdext;
 #include <queue>
 #include <set>
 #include <map>
+#include <sstream>
 
 using namespace std;
 typedef long long ll;
@@ -33,6 +34,7 @@ int nums[N];
 int test_case, n, diff;
 int form[N];
 int latter[N];
+string line;
 const int INF = 0x3f3f3f3f;
 inline void quickread() {
     ios::sync_with_stdio(false);
@@ -49,7 +51,7 @@ void getdiff() {
         f += nums[i];
     }
     int base = 1;
-    for(int i = n-1 ; i > 0; i ++) {
+    for(int i = n-1 ; i > 0; i --) {
         latter[i] = latter[i+1] + base*nums[i];
         base *= 10;
     }
@@ -62,10 +64,11 @@ void getdiff() {
 
 void solve() {
     memset(nums, 0, sizeof nums);
-    cin >> n;
+    stringstream inp(line);
+    int idx = 0;
+    while(inp >> nums[idx ++]){}
     diff = INF;
     for(int i = 0; i < n; i ++) cin >> nums[i];
-    sort(nums, nums + n);
     do {
         getdiff();
     } while(next_permutation(nums, nums + n));
@@ -77,6 +80,8 @@ int main()
     quickread();
     cin >> test_case;
     while(test_case --) {
+        getline(cin, line);
+        cout << line << endl;
         solve();
     }
     return 0;
