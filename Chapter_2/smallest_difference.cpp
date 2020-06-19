@@ -79,10 +79,11 @@ int main()
 {
     quickread();
     cin >> test_case;
+    string lines;
     while(test_case --) {
-        getline(cin, line);
-        cout << line << endl;
-        solve();
+        getline(std::cin, lines);
+        cout << lines << endl;
+        //solve();
     }
     return 0;
 }
