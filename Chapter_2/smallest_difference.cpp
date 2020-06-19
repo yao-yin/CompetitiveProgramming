@@ -32,8 +32,6 @@ typedef pair<int, int> pii;
 const int N = 11;
 int nums[N];
 int test_case, n, diff;
-int form[N];
-int latter[N];
 string line;
 const int INF = 0x3f3f3f3f;
 inline void quickread() {
@@ -52,14 +50,19 @@ int stoi(string & s) {
 }
 
 void getdiff() {
-    memset(form,0, sizeof form);
-    memset(latter,0, sizeof latter);
     int f = 0;
     int mid = n / 2;
     int l = 0;
+    if(nums[0] == 0||nums[mid] == 0) return;
     for(int i = 0; i < mid; i ++) {
-        f
+        f*= 10;
+        f += nums[i];
     }
+    for(int j = mid; j < n; j ++) {
+        l *= 10;
+        l += nums[j];
+    }
+    diff = min(diff, abs(f - l));
 }
 
 void solve() {
@@ -71,10 +74,14 @@ void solve() {
         nums[n ++] = stoi(a);
     }
     diff = INF;
-    getdiff();
-    do {
-        getdiff();
-    } while(next_permutation(nums, nums + n));
+    int n1, n2;
+    if(n == 2) {
+        diff = min(diff, abs(nums[0] - nums[1]));
+    } else {
+        do {
+            getdiff();
+        } while(next_permutation(nums, nums + n));
+    }
     cout << diff << endl;
 }
 
@@ -83,8 +90,8 @@ int main()
 {
     quickread();
     cin >> test_case;
+    cin.ignore();
     while(test_case --) {
-        cin.ignore();
         getline(cin, line);
         solve();
     }
