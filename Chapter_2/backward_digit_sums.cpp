@@ -31,14 +31,13 @@ typedef pair<int, int> pii;
 int n;
 const int N = 11;
 int nums[N];
-vector<int> calcWeight(int num) {
-    
-}                                                                                                                                                                                                                                                                                  
+int sums[N][N];
+void cal                                                                                                                                                                                                                                                                           
 
-int getSum(vector<int> & w) {
+int getSum() {
     int res = 0;
     for(int i = 0; i < n; i ++) {
-        res += w[i]*nums[i];
+        res += sums[n-1][i]*nums[i];
     }
     return res;
 }
