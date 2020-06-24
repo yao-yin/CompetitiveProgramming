@@ -28,11 +28,19 @@ using namespace std;
 typedef long long ll;
 typedef pair<int, int> pii;
 //const int mod = 1e9+7;
-int n;
+int n, tar;
 const int N = 11;
 int nums[N];
 int sums[N][N];
-void cal                                                                                                                                                                                                                                                                           
+void cal() {
+    sums[0][0] = 1;
+    for(int i = 0; i < n; i ++) {
+        for(int j = 0; j <= i; j ++) {
+            sums[i+1][j] += sums[i][j];
+            sums[i+1][j+1] += sums[i][j];
+        }
+    }
+}                                                                                                                                                                                                                                                                         
 
 int getSum() {
     int res = 0;
@@ -47,8 +55,22 @@ inline void quickread() {
     cin.tie(0);
 }
 
+void solve() {
+    for(int i = 0; i < n; i ++) {
+        nums[i] = i + 1;
+    }
+    cal();
+    do {
+        if(getSum() == tar) return;
+    } while(next_permutation(nums, nums + n));
+}
 int main() {
     quickread();
+    cin >> n >> tar;
+    solve();
+    for(int i = 0; i < n; i ++) {
+        cout << nums[i] << " ";
+    }
     
     return 0;
 }
