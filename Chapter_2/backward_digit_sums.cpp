@@ -28,29 +28,28 @@ using namespace std;
 typedef long long ll;
 typedef pair<int, int> pii;
 //const int mod = 1e9+7;
+int n;
 const int N = 11;
-int nums[N], n, sum;
-int sums[N][N];
+int nums[N];
+vector<int> calcWeight(int num) {
+    
+}                                                                                                                                                                                                                                                                                  
+
+int getSum(vector<int> & w) {
+    int res = 0;
+    for(int i = 0; i < n; i ++) {
+        res += w[i]*nums[i];
+    }
+    return res;
+}
+
 inline void quickread() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 }
 
-int check() {
-}
-
-void solve() {
-    for(int i = 1; i <= n; i ++) nums[i] = i;
-    do {
-        if(check() == sum) {
-            for(int i = 1; i <= n; i ++) cout << nums[i] <<" ";
-        }
-    } while(next_permutation(nums+1, nums+n+1));
-}
-
 int main() {
     quickread();
-    cin >> n >> sum;
-    solve();
+    
     return 0;
 }
