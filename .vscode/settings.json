@@ -8,6 +8,7 @@
         "iosfwd": "cpp",
         "istream": "cpp",
         "cstring": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "chrono": "cpp"
     }
 }
