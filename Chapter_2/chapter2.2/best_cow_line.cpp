@@ -32,6 +32,7 @@ const int N = 2010;
 char q[N];
 int n;
 int ptrl, ptrr;
+unordered_map<int, int> um;
 string res;
 inline void quickread() {
     ios::sync_with_stdio(false);
@@ -39,9 +40,14 @@ inline void quickread() {
 }
 
 bool check(int l, int r) {
-    if(q[l] < q[r] || l >= r)return true;
-    if(q[l] > q[r]) return false;
-    if(q[l] == q[r]) return check(l+1, r-1);
+    int code = l*n + r;
+    if(um.count(code)) return um[code];
+    int ret;
+    if(q[l] < q[r] || l >= r) ret = 1;
+    else if(q[l] > q[r]) ret = 0;
+    else ret = check(l+1, r-1);
+    um[code] = ret;
+    return ret;
 }
 
 void solve() {
