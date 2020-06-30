@@ -87,7 +87,11 @@ class T4Solotion {
         }
         return res;
     }
-    int getIndex()
+    int getIndex(
+
+
+        
+    )
 }
 int main()
 {
