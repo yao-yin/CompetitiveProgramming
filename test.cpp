@@ -90,7 +90,7 @@ class T4Solotion {
     int getIndex(
 
 
-        
+        j'ko
     )
 }
 int main()
