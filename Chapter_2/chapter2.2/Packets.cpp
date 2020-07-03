@@ -40,9 +40,16 @@ void solve() {
     int res = 0;
     res += nums[6];
     res += nums[5];
-    nums[1] = max(0, nums[1] - 11*nums[5]);
+    nums[1] = max((ll)0, nums[1] - 11*nums[5]);
     res += nums[4];
-    nums[2] = max(0, nums[2] - 5*nums[4]);
+    nums[2] = max((ll)0, nums[2] - 5*nums[4]);
+    ll remain_three = nums[3] % 4;
+    res += nums[3] / 4;
+    if(remain_three == 1) {
+        ll max_two = min((ll)5, nums[2]);
+        nums[2] -= max_two
+    } 
+    
 }
 
 int main() {
