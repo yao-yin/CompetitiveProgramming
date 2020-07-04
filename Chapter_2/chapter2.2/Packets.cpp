@@ -49,8 +49,8 @@ void solve() {
         flag1 = false;
     }
     res += nums[4];
-    if(nums[2] > 4*nums[4]) {
-        nums[2] -= 4*nums[4];
+    if(nums[2] > 5*nums[4]) {
+        nums[2] -= 5*nums[4];
     } else {
         flag2 = false;
         int max1 = nums[4]*20 - 4*nums[2];
@@ -61,7 +61,7 @@ void solve() {
         }
         nums[2] = 0;
     }
-    cout << nums[1] <<" " << nums[2] << endl;
+    //cout << nums[1] <<" " << nums[2] << endl;
     res += (nums[3] / 4);
     int remain = nums[3] % 4;
     if(remain) {
