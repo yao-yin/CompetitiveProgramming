@@ -37,6 +37,45 @@ inline void quickread() {
 }
 
 void solve() {
+    bool flag1 = (nums[1] > 0);
+    bool flag2 = (nums[2] > 0);
+    int res = 0;
+    res += nums[6];
+    res += nums[5];
+    if(nums[1] > 11*nums[5]) {
+        nums[1] -= 11*nums[5];
+    }else {
+        nums[1] = 0;
+        flag1 = false;
+    }
+    res += nums[4];
+    if(nums[2] > 4*nums[4]) {
+        nums[2] -= 4*nums[4];
+    } else {
+        flag2 = false;
+        int max1 = nums[4]*20 - 4*nums[2];
+        if(nums[1] > max1) nums[1] -= max1;
+        else {
+            nums[1] = 0;
+            flag1 = false;
+        }
+        nums[2] = 0;
+    }
+    res += (nums[3] / 4);
+    int remain = nums[3] % 4;
+    if(remain) {
+        res ++;
+        if(remain == 3) {
+            if(flag2) {
+                nums[2] --;
+                nums[1] = max((ll)0, nums[1] - 5);
+            } else {
+                nums[1] = max(ll(0), nums[1] - 9);
+            }
+        } else if(remain == 2) {
+            
+        }
+    }
 }
 
 int main() {
