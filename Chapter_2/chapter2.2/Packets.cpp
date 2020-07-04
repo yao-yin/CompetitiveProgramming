@@ -61,6 +61,7 @@ void solve() {
         }
         nums[2] = 0;
     }
+    cout << nums[1] <<" " << nums[2] << endl;
     res += (nums[3] / 4);
     int remain = nums[3] % 4;
     if(remain) {
@@ -73,9 +74,36 @@ void solve() {
                 nums[1] = max(ll(0), nums[1] - 9);
             }
         } else if(remain == 2) {
-            
+            if(flag2) {
+                ll max2 = min((ll)3, nums[2]);
+                nums[2] -= max2;
+                if(nums[1] > 18 - max2*4) {
+                    nums[1] -= (18 - max2*4);
+                } else {
+                    nums[1] = 0;
+                }
+            }
+        } else {
+            if(flag2) {
+                ll max2 = min(ll(5), nums[2]);
+                nums[2] -= max2;
+                if(nums[1] > 27 - max2*4) {
+                    nums[1] -= (27 - max2*4);
+                } else {
+                    nums[1] = 0;
+                }
+            }
         }
     }
+    res += (nums[2] / 9);
+    if(nums[2] % 9) {
+        res ++;
+        nums[1] = max((ll)0, nums[1] - (36 - 4*(nums[2] % 9)));
+    }
+    res += (nums[1] / 36);
+    res += (nums[1] % 36 != 0);
+    if(res == 0) return;
+    cout << res << endl;
 }
 
 int main() {
