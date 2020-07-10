@@ -41,12 +41,14 @@ inline void quickread()
 
 void solve() 
 {   
-    for (int i = 1; i < 32; i ++) nums[i] = (1 << (i-1));
+    for (int i = 1; i < 32; i ++) nums[i] = (1 << i);
+    //dp[0][0] = 1;
     dp[0][0] = 1;
     for (int i = 1; i < 32; i ++) 
     {
-        for (int j = 0; j <= n; j ++) 
+        for (int j = 1; j <= n; j ++) 
         {
+            if(i == 0 && j == 0) continue;
             dp[i][j] += dp[i-1][j];
             if (j >= nums[i]) 
             {
