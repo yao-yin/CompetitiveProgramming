@@ -27,38 +27,34 @@ using namespace stdext;
 using namespace std;
 typedef long long ll;
 typedef pair<int, int> pii;
-const int mod = 1e9;
-const int N = 1000010;
-int dp[N], n;
-int nums[32];
-// dp[i][j]: use (0, 1, 2, .. i) -> j dp[i][j] = dp[i-1][j] + dp[i-1][j-nums[i]] + dp[i-1][j-2*nums[i]]..
-// dp[i][j-nums[i]] = dp[i-1][j-nums[i]] + dp[i-1][j-2*nums[i]]
+//const int mod = 1e9+7;
+const int T = 1010;
+const int W = 33;
+int dp[T][W][3], w, t;
+int apples[T];
 inline void quickread() 
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
 }
 
-void solve() 
-{   
-    for (int i = 1; i < 32; i ++) nums[i] = (1 << (i-1));
-    dp[0] = 1;
-    for (int i = 1; i < 32; i ++) 
-    {
-        for (int j = 0; j <= n; j ++) 
-        {
-            if (j >= nums[i]) dp[j] += dp[j-nums[i]];
-            dp[j] %= mod;
-            //cout << i << " " << j << ": " << dp[i][j] << endl;
-        }
-    }
-    cout << dp[n];
-}
-
 int main() 
 {
     quickread();
-    cin >> n;
-    solve();
+    cin >> w >> t;
+    memset(dp, -0x3f3f3f3f, sizeof dp);
+    dp[0][0][1] = 0;
+    for (int i = 1; i <= t; i ++) 
+    {
+        cin >> apples[i];
+    }
+    for (int i = 1; i <= t; i ++) 
+    {
+        dp[]
+        for (int j = 1; j <= w; j ++)
+        {
+            dp[i][j][1] = max(dp[i][j-1])
+        }
+    }
     return 0;
 }
