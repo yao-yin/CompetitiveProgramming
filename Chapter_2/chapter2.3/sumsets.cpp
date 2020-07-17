@@ -29,7 +29,7 @@ typedef long long ll;
 typedef pair<int, int> pii;
 const int mod = 1e9;
 const int N = 1000010;
-ll dp[32][N], n;
+ll dp[N], n;
 ll nums[32];
 // dp[i][j]: use (0, 1, 2, .. i) -> j dp[i][j] = dp[i-1][j] + dp[i-1][j-nums[i]] + dp[i-1][j-2*nums[i]]..
 // dp[i][j-nums[i]] = dp[i-1][j-nums[i]] + dp[i-1][j-2*nums[i]]
@@ -41,24 +41,21 @@ inline void quickread()
 
 void solve() 
 {   
-    for (int i = 1; i < 32; i ++) nums[i] = (1 << i);
-    //dp[0][0] = 1;
-    dp[0][0] = 1;
+    for (int i = 1; i < 32; i ++) nums[i] = (1 << (i-1));
+    dp[0] = 1;
     for (int i = 1; i < 32; i ++) 
     {
-        for (int j = 1; j <= n; j ++) 
+        for (int j = 0; j <= n; j ++) 
         {
-            if(i == 0 && j == 0) continue;
-            dp[i][j] += dp[i-1][j];
-            if (j >= nums[i]) 
+            if(j >= nums[i])
             {
-                dp[i][j] += dp[i][j-nums[i]];
+                dp[j] += dp[j-nums[i]];
             }
-            dp[i][j] %= mod;
+            dp[j] %= mod;
             //cout << i << " " << j << ": " << dp[i][j] << endl;
         }
     }
-    cout << dp[31][n];
+    cout << dp[n];
 }
 
 int main() 
