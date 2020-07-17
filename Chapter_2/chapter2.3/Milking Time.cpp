@@ -29,19 +29,49 @@ typedef long long ll;
 typedef pair<int, int> pii;
 //const int mod = 1e9+7;
 const int N = 1010;
+int n, m, r;
 struct Interval {
     int st, ed, eff;
+    Interval(){}
+    Interval(int s, int e, int ef, int bias) {
+        st = s;
+        ed = e + bias;
+        eff = ef;
+    }
+    bool operator< (const Interval & other) const {
+        return ed < other.ed;
+    }
 } times[N];
 
-inline void quickread() 
-{
+int find(int time, int num) {
+    int l = 0;
+    int r = num;
+    int res = -1;
+    while (l <= r) {
+        int mid = (l + r) / 2;
+        if (times[mid].ed <= time) {
+            res = mid;
+            l = mid + 1;
+        } else {
+            r = mid - 1;
+        }
+    }
+    return res;
+}
+
+inline void quickread() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 }
 
-int main() 
-{
+int main() {
     quickread();
-    
+    cin >> n >> m >> r;
+    for (int i = 0; i < n; i ++) {
+        
+    }
+
+
+
     return 0;
 }
