@@ -30,6 +30,7 @@ typedef pair<int, int> pii;
 //const int mod = 1e9+7;
 const int N = 1010;
 int n, m, r;
+ll dp[N];
 struct Interval {
     int st, ed, eff;
     Interval(){}
@@ -67,11 +68,19 @@ inline void quickread() {
 int main() {
     quickread();
     cin >> n >> m >> r;
-    for (int i = 0; i < n; i ++) {
-        
+    int st,ed,eff;
+    for (int i = 0; i < m; i ++) {
+        cin >> st >> ed >> eff;
+        times[i] = Interval(st, ed, eff, r);
     }
-
-
-
+    sort(times, times + m);
+    dp[0] = times[0].eff;
+    for (int i = 1; i < m; i ++) {
+        int idx = find(times[i].st, m);
+        ll curr = times[i].eff;
+        if (idx != -1) curr += dp[idx];
+        dp[i] = max(dp[i-1], curr);
+    }
+    cout << dp[m-1] << endl;
     return 0;
 }
