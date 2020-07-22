@@ -36,7 +36,7 @@ ll add[26];
 int n, m;
 string str;
 ll query (int l, int r) {
-    if(st[l][r]) {
+    if (st[l][r]) {
         return res[l][r];
     } else {
         if (l >= r) {
