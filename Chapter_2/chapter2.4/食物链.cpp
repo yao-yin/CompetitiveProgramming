@@ -40,10 +40,6 @@ inline void quickread() {
     cin.tie(0);
 }
 
-void merge(int a, int b, int r) {
-
-}
-
 pii find(int node) {
     // return {root, dist}
     if(parent[node] == node) return make_pair(node, 0);
@@ -54,6 +50,13 @@ pii find(int node) {
         return make_pair(res.first, dist[node]);
     }
 }
+void merge(int a, int b, int r) {
+    pii resa = find(a);
+    parent[resa.first] = b;
+    dist[resa.first] = r;
+}
+
+
 
 int diff(int a, int b) {
     return (a % 3 - b % 3 + 3) % 3;
@@ -61,11 +64,11 @@ int diff(int a, int b) {
 
 int main() {
     quickread();
-    cin >> n >> k;
+    scanf("%d%d", &n, &k);
     for (int i = 1; i <= n; i ++) parent[i] = i;
-    for (int i = 0; i < K; i ++) {
-        cin >> d >> x >> y;
-        if(x < 0 || y < 0 || x > n || y > n) {
+    for (int i = 0; i < k; i ++) {
+        scanf("%d%d%d", &d, &x, &y);
+        if(x <= 0 || y <= 0 || x > n || y > n) {
             cnt ++;
             continue;
         }
@@ -75,14 +78,17 @@ int main() {
             if (resx.first == resy.first) {
                 if(diff(resx.second, resy.second) != 0) cnt ++;
             } else {
-                merge(x, y, 0);
+                merge(x, y, (3-resx.second%3));
             }
         }
         if (d == 2) {
             if (resx.first == resy.first) {
-                if(diff(resx.second, resy.second) != )
+                if(diff(resx.second, resy.second) != 1) cnt ++;
+            } else {
+                merge(x, y, 4-resx.second % 3);
             }
         }
     }
+    cout << cnt << endl;
     return 0;
 }
