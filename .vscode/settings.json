@@ -9,6 +9,7 @@
         "istream": "cpp",
         "cstring": "cpp",
         "xstring": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "queue": "cpp"
     }
 }
