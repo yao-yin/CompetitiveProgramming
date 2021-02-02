@@ -111,20 +111,21 @@ int main() {
         cin >> a >> b >> d;
         add(a, b, d);
     }
+    for (int i = 1; i <= n; i ++)  {
+        add(i, i-1, 0);
+    }
     //need to do sth here
-    //bool any = check();
+    bool any = check();
 
     for (int i = 0; i < md; i ++) {
         cin >> a >> b >> d;
         add(b, a, -d);
     }
-    for (int i = 1; i <= n; i ++)  {
-        add(i, i-1, 0);
-    }
+
     add(0, 1, 0);
     // run spfa/bellman-ford from src 0
     if (spfa()) {
-        if(dist[n] >= 0x3f3f3f) {
+        if(!any) {
             cout << -2 << endl;
         } else {
             cout << dist[n] << endl;
