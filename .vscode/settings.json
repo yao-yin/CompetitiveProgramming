@@ -10,6 +10,7 @@
         "cstring": "cpp",
         "xstring": "cpp",
         "chrono": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "ostream": "cpp"
     }
 }
