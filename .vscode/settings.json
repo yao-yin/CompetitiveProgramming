@@ -11,6 +11,7 @@
         "xstring": "cpp",
         "chrono": "cpp",
         "queue": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "algorithm": "cpp"
     }
 }
