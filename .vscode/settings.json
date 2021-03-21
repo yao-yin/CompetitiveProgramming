@@ -12,6 +12,7 @@
         "chrono": "cpp",
         "queue": "cpp",
         "ostream": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "cstdlib": "cpp"
     }
 }
