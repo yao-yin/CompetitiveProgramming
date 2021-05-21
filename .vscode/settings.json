@@ -14,5 +14,8 @@
         "ostream": "cpp",
         "algorithm": "cpp",
         "cstdlib": "cpp"
-    }
+    },
+    "editor.fontSize": 18,
+    "debug.console.fontSize": 22,
+    "scm.inputFontSize": 22
 }
