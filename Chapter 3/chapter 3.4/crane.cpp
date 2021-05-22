@@ -72,16 +72,7 @@ void update(int idx, double ang, int u, int l, int r) {
     // [L, R]
     // cout << idx << " at pos: " << u << " " << ang/PI*180 << " " << l <<  " " << r << endl;
     if (idx < l || idx > r) return;
-    if (tree[u].l == tree[u].r) {
-        if (idx < tree[u].l) {
-            tree[u].angle += ang;
-            double Co = cos(tree[u].angle), Si = sin(tree[u].angle);
-            double nx = Co*tree[u].x - Si*tree[u].y;
-            double ny = Si*tree[u].x + Co*tree[u].y;
-            tree[u].x = nx, tree[u].y = ny;
-        }
-        return;
-    }
+    if (tree[u].l == tree[u].r) return;
     int chl = 2*u;
     int chr = 2*u + 1;
     int mid = (l + r) / 2;
