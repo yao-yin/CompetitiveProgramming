@@ -29,104 +29,93 @@ typedef long long ll;
 typedef pair<int, int> pii;
 //const int mod = 1e9+7;
 
-const int MAXN = 100010;
-int segs[MAXN];
-
-struct Node {
-    int l, r;
-    double x, y, lazy_tag;
-}tree[4*MAXN];
-
-void push_up(Node & u, Node & l, Node & r) {
-    //use node l and node r to update node u;
-    u.x = l.x + r.x;
-    u.y = l.y + r.y;
-}
-
-void push_up(int u) {
-    push_up(tree[u], tree[2*u], tree[2*u+1]);
-}
-
-void build(int u, int l, int r) {
-    tree[u].l = l, tree[u].r = r, tree[u].lazy_tag = 0;
-    if (l == r) {
-        tree[u].x = 0;
-        tree[u].y = segs[l];
-    } else {
-        int mid = ((l + r) >> 1) + (l & r & 1);
-        build(2*u, l, mid);
-        build(2*u+1, mid+1, r);
-        push_up(u);
-    }
-}
-
-void rotate(int u, double angle) {
-    
-}
-
-void push_down(int u) {
-    // use node u to update 2 children
-    if (tree[u].l == tree[u].r) {
-        tree[u].lazy_tag = 0;
-    } else {
-        double curr_tag = tree[u].lazy_tag;
-        tree[u].lazy_tag = 0;
-        tree[2*u].lazy_tag += curr_tag;
-        tree[2*u+1].lazy_tag += curr_tag;
-        rotate(2*u, curr_tag);
-        rotate(2*u+1, curr_tag);
-    }
-}
-
-void update(int u, int l, int r, double angle) {
-    // update range [l, r]
-    if (tree[u].l >= l && tree[u].r <= r) {
-        rotate(u, angle);
-        tree[u].lazy_tag += angle;
-    } else {
-        push_down(u);
-        int mid = (l + r) / 2;
-        if (l > mid) {
-            update(2*u+1, l, r, angle);
-        } else if (r <= mid) {
-            update(2*u, l, r, angle);
-        } else {
-            update(2*u, l, r, angle);
-            update(2*u+1, l, r, angle);
-        }
-        push_up(u);
-    }
-}
-
-Node query(int u, int l, int r) {
-    if (tree[u].l == l && tree[u].r == r) {
-        return tree[u];
-    } else {
-        push_down(u);
-        int mid = (tree[u].l + tree[u].r) / 2;
-        if (l > mid) {
-            //rhs
-            return query(2*u+1, l, r);
-        } else if (r <= mid) {
-            //lhs
-            return query(2*u, l, r);
-        } else {
-            Node lhs = query(2*u, l, mid);
-            Node rhs = query(2*u+1, mid+1, r);
-            Node res;
-            push_up(res, lhs, rhs);
-            return res;
-        }
-    }
-}
 
 inline void quickread() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 }
 
+const int MAXN = 100010;
+const double PI = acos(-1.0);
+double len[MAXN];
+double prv[MAXN];
+int N, C;
+
+struct Node {
+    double x, y, angle;
+    int l, r;
+    Node(double x, double y, double angle, int l, int r) {
+        this->x = x;
+        this->y = y;
+        this->angle = angle;
+        this->l = l;
+        this->r = r;
+    }
+    Node() {}
+} tree[MAXN*4];
+
+void build(int u, int l, int r) {
+    if (l > r) return;
+    if (l == r) {
+        tree[u] = Node(0, len[l], 0, l, r);
+        return;
+    }
+    int chl = 2*u;
+    int chr = 2*u + 1;
+    int mid = (l + r) / 2;
+    build(chl, l, mid);
+    build(chr, mid + 1, r);
+    tree[u] = Node(0, tree[chl].y + tree[chr].y, 0, l, r); 
+}
+
+void update(int idx, double ang, int u, int l, int r) {
+    // [L, R]
+    // cout << idx << " at pos: " << u << " " << ang/PI*180 << " " << l <<  " " << r << endl;
+    if (idx < l || idx > r) return;
+    if (tree[u].l == tree[u].r) {
+        if (idx < tree[u].l) {
+            tree[u].angle += ang;
+            double Co = cos(tree[u].angle), Si = sin(tree[u].angle);
+            double nx = Co*tree[u].x - Si*tree[u].y;
+            double ny = Si*tree[u].x + Co*tree[u].y;
+            tree[u].x = nx, tree[u].y = ny;
+        }
+        return;
+    }
+    int chl = 2*u;
+    int chr = 2*u + 1;
+    int mid = (l + r) / 2;
+    update(idx, ang, chl, l, mid);
+    update(idx, ang, chr, mid+1, r);
+    if (idx <= mid) {
+        tree[u].angle += ang;
+    }
+    double Co = cos(tree[u].angle), Si = sin(tree[u].angle);
+    tree[u].x = tree[chl].x + Co*tree[chr].x - Si*tree[chr].y;
+    tree[u].y = tree[chl].y + Si*tree[chr].x + Co*tree[chr].y;
+    // cout << u << ": " << tree[u].x << " " << tree[u].y << endl;
+    // cout << "left: " << tree[chl].x << " " << tree[chl].y << endl;
+    // cout << "right: " << tree[chr].x << " " << tree[chr].y << endl;
+}
+
 int main() {
     quickread();
-    
+    while (cin >> N >> C) {
+        for (int i = 1; i <= N; i ++) {
+            cin >> len[i];
+        }
+        build(1, 1, N);
+        for (int i = 1; i <= N; i ++) {
+            prv[i] = PI;
+        }
+        while (C --) {
+            int s, angle_360;
+            cin >> s >> angle_360;
+            double a = (double) angle_360/180 * PI;
+            update(s, a - prv[s], 1, 1, N);
+            prv[s] = a;
+            cout << fixed << setprecision(2) << tree[1].x << " " << tree[1].y << endl;
+        }
+    }
     return 0;
 }

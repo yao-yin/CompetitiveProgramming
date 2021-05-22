@@ -13,7 +13,8 @@
         "queue": "cpp",
         "ostream": "cpp",
         "algorithm": "cpp",
-        "cstdlib": "cpp"
+        "cstdlib": "cpp",
+        "cmath": "cpp"
     },
     "editor.fontSize": 18,
     "debug.console.fontSize": 22,
