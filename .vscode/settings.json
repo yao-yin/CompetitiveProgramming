@@ -14,7 +14,15 @@
         "ostream": "cpp",
         "algorithm": "cpp",
         "cstdlib": "cpp",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "array": "cpp",
+        "hash_map": "cpp",
+        "hash_set": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "unordered_set": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp"
     },
     "editor.fontSize": 18,
     "debug.console.fontSize": 22,
