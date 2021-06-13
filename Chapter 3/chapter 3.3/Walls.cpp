@@ -1,3 +1,4 @@
+// use G++
 #include <cstdio>
 #include <algorithm>
 #include <cctype>
