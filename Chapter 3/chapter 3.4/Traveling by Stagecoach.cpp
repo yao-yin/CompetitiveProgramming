@@ -57,16 +57,17 @@ inline void quickread() {
     cin.tie(0);
 }
 
+
 void solve() {
     dp[0][A] = 0;
     for (int st = 1; st < (1 << T); st ++) {
-        for (int des = 0; des < N; des ++) {
+        for (int des = 1; des <= N; des ++) {
             // dp[st][des] 
             for (int last = 0; last < T; last ++) {
                 if ((st >> last) & 1 == 0) continue;
-                for (int src = 0; src < N; src ++) {
+                for (int src = 1; src <= N; src ++) {
                     if (g[src][des] >= INF) continue;
-                    dp[st][des] = min(dp[st][des], dp[st ^ (1 << last)] + g[src][des] / tickets[last]);
+                    dp[st][des] = min(dp[st][des], dp[st ^ (1 << last)][src] + g[src][des] / tickets[last]);
                 }
             }
         }
@@ -94,6 +95,7 @@ int main() {
             int src, des;
             cin >> src >> des >> curr;
             g[src][des] = min(g[src][des], curr);
+            g[des][src] = min(g[des][src], curr);
         }
         solve();
     }
