@@ -1,1 +1,4 @@
 .autogit
+*.oac
+*.out
+*.inp
