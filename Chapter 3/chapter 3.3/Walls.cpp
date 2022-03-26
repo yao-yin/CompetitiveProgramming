@@ -1,4 +1,4 @@
-// use G++
+// use G++, src code from https://dafenghh.github.io/post/7d2ff651.html
 #include <cstdio>
 #include <algorithm>
 #include <cctype>
