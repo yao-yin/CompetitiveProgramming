@@ -44,10 +44,11 @@ struct I {
     int l,r;
     ll s;
     bool operator< (const I &other) const {
-        if (l < other.l) return true;
-        if (l > other.l) return false;
+        // s > 0, both are ok, no matter l or r.
         if (r < other.r) return true;
         if (r > other.r) return false;
+        if (l < other.l) return true;
+        if (l > other.l) return false;
         return s < other.s;
     }
 } is[MAXN];
